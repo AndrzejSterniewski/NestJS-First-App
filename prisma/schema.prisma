@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,23 +12,30 @@ datasource db {
 }
 
 model Product {
-  id          String @id @default(uuid())
-  name        String
-  price       Int
+  id String  @id @default(uuid())
+  name String
+  price Int
   description String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  orders    Order[]
+  orders Order[]
+}
+
+model Client {
+  id String @id @default(uuid())
+  name String
+  address String
+  orders Order[]
 }
 
 model Order {
-  id        String @id @default(uuid())
-  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  id String @id @default(uuid())
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   productId String?
-  client    String
-  address   String
+  client Client? @relation(fields: [clientId], references: [id])
+  clientId String?
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

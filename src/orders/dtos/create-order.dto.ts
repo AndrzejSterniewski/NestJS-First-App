@@ -1,4 +1,3 @@
-import { Transform } from 'class-transformer';
 import {
     IsNotEmpty,
     IsString,
@@ -10,14 +9,9 @@ export class CreateOrderDTO {
     @IsString()
     @IsUUID()
     productId: string;
-
+    
     @IsNotEmpty()
     @IsString()
-    @Transform(({ value }) => (Array.isArray(value) ? value.join(' ') : ''))
-    client: string;
-
-    @IsNotEmpty()
-    @IsString()
-    @Transform(({ value }) => (Array.isArray(value) ? value.join(', ') : ''))
-    address: string;
+    @IsUUID()
+    clientId: string;
 }
